@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bel073bv2jmwl"]
+
+[ext_resource type="Script" path="res://Battlefield.gd" id="1_46pq4"]
+[ext_resource type="Texture2D" uid="uid://bh77ylstv5dnf" path="res://icon.svg" id="2_jlxlm"]
+
+[node name="Battlefield" type="Node3D"]
+script = ExtResource("1_46pq4")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.186226, -0.0643978, 2.63024)
+
+[node name="Card" type="Sprite3D" parent="."]
+texture = ExtResource("2_jlxlm")
