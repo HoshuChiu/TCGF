@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="308px" height="488px" viewBox="0 0 308 488" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 2</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="300" height="480" rx="8"></rect>
+        <filter x="-2.0%" y="-1.2%" width="104.0%" height="102.5%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <filter x="-19.2%" y="-15.9%" width="138.5%" height="131.7%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <text id="text-4" font-family="STHeitiTC-Medium, Heiti TC" font-size="48" font-weight="bold">
+            <tspan x="90" y="330" fill="#CA7F7F">T</tspan>
+            <tspan x="110.448" y="330" fill="#D1900D">C</tspan>
+            <tspan x="149.472" y="330" fill="#7F8ACA">G</tspan>
+            <tspan x="191.328" y="330" fill="#88B089">F</tspan>
+        </text>
+        <filter x="-5.6%" y="-14.6%" width="111.2%" height="129.2%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组-2" transform="translate(4.000000, 4.000000)">
+            <g id="矩形">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <rect stroke="#AD2A2A" stroke-width="8" stroke-linejoin="square" fill="#CA7F7F" fill-rule="evenodd" x="4" y="4" width="292" height="472" rx="8"></rect>
+            </g>
+            <g id="编组" filter="url(#filter-3)" transform="translate(98.000000, 131.000000)" stroke="#AD2A2A" stroke-width="8">
+                <rect id="矩形" fill="#88B089" x="0" y="12" width="60" height="96" rx="8"></rect>
+                <rect id="矩形" fill="#7F8ACA" x="22" y="30" width="60" height="96" rx="8"></rect>
+                <rect id="矩形" fill="#D1900D" x="44" y="0" width="60" height="96" rx="8"></rect>
+            </g>
+            <g id="TCGF" fill-rule="nonzero" stroke="#AD2A2A" stroke-width="2">
+                <use fill="#CA7F7F" fill-opacity="1" stroke-opacity="1" filter="url(#filter-5)" xlink:href="#text-4"></use>
+                <use fill="#CA7F7F" fill-opacity="1" stroke-opacity="1" xlink:href="#text-4"></use>
+                <use xlink:href="#text-4"></use>
+            </g>
+        </g>
+    </g>
+</svg>
