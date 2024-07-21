@@ -1,15 +1,180 @@
-[gd_scene load_steps=3 format=3 uid="uid://bel073bv2jmwl"]
+[gd_scene load_steps=11 format=3 uid="uid://bel073bv2jmwl"]
 
 [ext_resource type="Script" path="res://Battlefield.gd" id="1_46pq4"]
-[ext_resource type="Texture2D" uid="uid://bh77ylstv5dnf" path="res://icon.svg" id="2_jlxlm"]
+[ext_resource type="Texture2D" uid="uid://bqgmtty64ja1" path="res://Sketch/card_bkg_0.png" id="2_gsngf"]
+[ext_resource type="Script" path="res://card.gd" id="3_a7dca"]
+[ext_resource type="Texture2D" uid="uid://cidjtmcuslgyk" path="res://Sketch/bf1.png" id="4_hwwjd"]
+
+[sub_resource type="Animation" id="Animation_tja54"]
+resource_name = "new_animation"
+length = 1.0585
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Card:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(10, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.9)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Card:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-27, -0.25, 0, 0.5, -9, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.9)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Card:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.9)
+}
+
+[sub_resource type="Animation" id="Animation_1w0od"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Card:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Card:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Card:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7b2e4"]
+_data = {
+"RESET": SubResource("Animation_1w0od"),
+"new_animation": SubResource("Animation_tja54")
+}
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_fx01p"]
+states/Start/position = Vector2(364, 100)
+
+[sub_resource type="Animation" id="Animation_jrat8"]
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Card:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(22, -0.25, 0, 0.7, -2, 31, -0.2, 4, 0, 0),
+"times": PackedFloat32Array(0, 0.7)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Card:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.9)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Card:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 8, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.9)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s8go2"]
+_data = {
+"draw_card": SubResource("Animation_jrat8")
+}
 
 [node name="Battlefield" type="Node3D"]
 script = ExtResource("1_46pq4")
 
 [node name="Node3D" type="Node3D" parent="."]
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.186226, -0.0643978, 2.63024)
+[node name="MainCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 27)
+fov = 25.0
 
 [node name="Card" type="Sprite3D" parent="."]
-texture = ExtResource("2_jlxlm")
+transform = Transform3D(1.91069e-15, -4.37114e-08, -1, -1, -4.37114e-08, 0, -4.37114e-08, 1, -4.37114e-08, 0, 0, 0)
+texture = ExtResource("2_gsngf")
+script = ExtResource("3_a7dca")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Card"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_7b2e4")
+}
+
+[node name="Label" type="Label3D" parent="Card"]
+text = "hehe"
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7b2e4")
+}
+tree_root = SubResource("AnimationNodeStateMachine_fx01p")
+anim_player = NodePath("../Card/AnimationPlayer")
+
+[node name="Field" type="Sprite3D" parent="."]
+visible = false
+texture = ExtResource("4_hwwjd")
+
+[node name="SelfHeap" type="Node" parent="."]
+
+[node name="OppoHeap" type="Node" parent="."]
+
+[node name="SelfHand" type="Node" parent="."]
+
+[node name="Button" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "抽卡"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"battle_anim": SubResource("AnimationLibrary_s8go2")
+}
+
+[connection signal="pressed" from="Button" to="." method="draw_card"]
