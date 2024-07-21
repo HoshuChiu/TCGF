@@ -33,14 +33,17 @@ func _ready():
 	for i in range(0,BattleInfoMgr.self_card_hand_count):
 		var card=BasicCard.new(0)
 		card.position=BattleInfoMgr.calc_card_position(BattleInfoMgr.BattleArea.AREA_SELF_HAND,i)
-		card.render_priority=i
-		add_child(card)
+		card.rotation=BattleInfoMgr.calc_card_rotation(i).get_euler()
+		card.render_priority=0
+		print(card.position)
+		$SelfHand.add_child(card)
 	#Animation
 
 func draw_card():
 	var card:BasicCard=$SelfHeap.get_child(0)
 	$SelfHeap.remove_child(card)
 	$SelfHand.add_child(card)
+	$SelfHand.repos_hand_cards(1,BattleInfoMgr.self_card_hand_count)
 	
 	card.on_draw()
 	pass

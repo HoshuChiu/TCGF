@@ -17,7 +17,8 @@ static var oppo_card_heap_max:int
 static var self_card_hand_max:int
 static var oppo_card_hand_max:int
 
-const HAND_ARC_CTRL=48
+const HAND_ARC_CTRL=36
+const HAND_OFFSET_CTRL=6
 const AREA_HAND_CARD=6
 
 func _init(self_name:String,oppo_name:String,self_job:int,oppo_job:int,self_card_count:int=30,oppo_card_count:int=30):
@@ -75,7 +76,7 @@ static func calc_card_position(area:BattleArea,slot:int)->Vector3:
 				distance=0.8
 			var arc:float=1.571+(distance+(self_card_hand_count/2-1)*distance*2-slot*distance*2)/HAND_ARC_CTRL
 			x=HAND_ARC_CTRL*cos(arc)
-			y=HAND_ARC_CTRL*sin(arc)-54
+			y=HAND_ARC_CTRL*sin(arc)-HAND_ARC_CTRL-HAND_OFFSET_CTRL
 			z=AREA_HAND_CARD
 			pass
 		BattleArea.AREA_SELF_HAND when self_card_hand_count%2==1:
@@ -84,9 +85,8 @@ static func calc_card_position(area:BattleArea,slot:int)->Vector3:
 				distance=0.8
 			var arc:float=1.571+(distance*(self_card_hand_count-1)-2*slot*distance)/HAND_ARC_CTRL
 			x=HAND_ARC_CTRL*cos(arc)
-			y=HAND_ARC_CTRL*sin(arc)-54
+			y=HAND_ARC_CTRL*sin(arc)-HAND_ARC_CTRL-HAND_OFFSET_CTRL
 			z=AREA_HAND_CARD
-			print("%f %f %f"%[x,y,z])
 			pass
 		_:
 			x=0
@@ -94,7 +94,15 @@ static func calc_card_position(area:BattleArea,slot:int)->Vector3:
 	return Vector3(x,y,z)
 	
 static func calc_card_rotation(slot:int)->Quaternion:
-	return Quaternion(0,0,1,0.02)
+	var z:float
+	var distance=6.4/self_card_hand_count
+	if distance>0.8:
+		distance=0.8
+	if self_card_hand_count%2==0:
+		z=(distance+(self_card_hand_count/2-1)*distance*2-slot*distance*2)/HAND_ARC_CTRL
+	else:
+		z=(distance*(self_card_hand_count-1)-2*slot*distance)/HAND_ARC_CTRL
+	return Quaternion.from_euler(Vector3(0,0,z))
 # TODO: 动态改变
 static func _get_job_name(job_id:int)->String:
 	match job_id:

@@ -5,7 +5,7 @@ extends Control
 func _ready():
 	DisplayServer.window_set_size(Vector2i(1200,750))
 	DisplayServer.window_set_title("TCGF")
-	get_tree().change_scene_to_file("res://Battlefield.tscn")
+	get_tree().change_scene_to_file("res://Battle/Battlefield.tscn")
 	pass # Replace with function body.
 
 
