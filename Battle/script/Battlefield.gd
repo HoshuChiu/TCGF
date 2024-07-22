@@ -6,7 +6,7 @@ class_name BF
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	$MainCamera.position=Vector3(0,0,35)
+	$MainCamera.position=Vector3(0,GraphicCtrl.CAMERA_Y_OFFSET,GraphicCtrl.CAMERA_HEIGHT)
 	
 	# TODO:Get Battle Infomations
 	BattleInfoMgr.init_battle("我是你爹","我也是你爹",1,2)
@@ -14,12 +14,10 @@ func _ready():
 	
 	for i in range(0,BattleInfoMgr.self_card_heap_count):
 		var card=BasicCard.new(0)
-		#var card = card_res.instantiate()
-		
-		
 		card.rotate_y(1.57)
 		card.rotate_x(1.57)
 		card.position=BattleInfoMgr.calc_card_position(BattleInfoMgr.BattleArea.AREA_SELF_HEAP,i)
+		card.area=BattleInfoMgr.BattleArea.AREA_SELF_HEAP
 		$SelfHeap.add_child(card)
 	
 	for i in range(0,BattleInfoMgr.oppo_card_heap_count):
@@ -27,6 +25,7 @@ func _ready():
 		card.rotate_y(1.57)
 		card.rotate_x(1.57)
 		card.position=BattleInfoMgr.calc_card_position(BattleInfoMgr.BattleArea.AREA_OPPO_HEAP,i)
+		card.area=BattleInfoMgr.BattleArea.AREA_OPPO_HEAP
 		$OppoHeap.add_child(card)
 	
 	#Animation
@@ -34,9 +33,8 @@ func _ready():
 func draw_card():
 	var card:BasicCard=$SelfHeap.get_child(0)
 	$SelfHeap.remove_child(card)
+	$SelfHand.repos_hand_cards(1,BattleInfoMgr.self_card_hand_count-1)
 	$SelfHand.add_child(card)
-	$SelfHand.repos_hand_cards(1,BattleInfoMgr.self_card_hand_count)
-	
 	card.on_draw()
 	pass
 	
@@ -44,5 +42,22 @@ func draw_card():
 func _process(delta):
 	pass
 
-func init_anm(self_name:String,oppo_name:String):
-	pass
+const RAY_LENGTH = 200
+
+func _physics_process(delta):
+	var space_state = get_world_3d().direct_space_state
+	var cam = $MainCamera
+	var mousepos = get_viewport().get_mouse_position()
+
+	var origin = cam.project_ray_origin(mousepos)+cam.project_ray_normal(mousepos)
+	var end = origin + cam.project_ray_normal(mousepos) * RAY_LENGTH
+	var query = PhysicsRayQueryParameters3D.create(origin, end)
+	query.collide_with_areas = true
+
+	var result = space_state.intersect_ray(query)
+	if not result.is_empty():
+		var card:BasicCard=result["collider"].shape_owner_get_owner(result["shape"])
+		if(card.area==BattleInfoMgr.BattleArea.AREA_SELF_HAND):
+			$SelfHand.on_card_hovered(card.slot)
+	else:
+		$SelfHand.on_hover_cancel()
