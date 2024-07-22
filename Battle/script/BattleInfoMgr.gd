@@ -17,7 +17,7 @@ static var oppo_card_heap_max:int
 static var self_card_hand_max:int
 static var oppo_card_hand_max:int
 
-const HAND_ARC_CTRL=36
+const HAND_ARC_CTRL=30
 const HAND_OFFSET_CTRL=6
 const AREA_HAND_CARD=6
 

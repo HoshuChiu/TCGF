@@ -19,7 +19,8 @@ func repos_hand_cards(count:int,position:int):
 		child.render_priority=i
 		if i==BattleInfoMgr.self_card_hand_count:
 			break
-		child.position=BattleInfoMgr.calc_card_position(BattleInfoMgr.BattleArea.AREA_SELF_HAND,i)
+		#child.position=BattleInfoMgr.calc_card_position(BattleInfoMgr.BattleArea.AREA_SELF_HAND,i)
+		child.on_adjust(i)
 		child.rotation=BattleInfoMgr.calc_card_rotation(i).get_euler()
 		i+=1
 	pass

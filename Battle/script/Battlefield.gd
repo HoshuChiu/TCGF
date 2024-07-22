@@ -29,14 +29,6 @@ func _ready():
 		card.position=BattleInfoMgr.calc_card_position(BattleInfoMgr.BattleArea.AREA_OPPO_HEAP,i)
 		$OppoHeap.add_child(card)
 	
-	BattleInfoMgr.self_card_hand_count=3
-	for i in range(0,BattleInfoMgr.self_card_hand_count):
-		var card=BasicCard.new(0)
-		card.position=BattleInfoMgr.calc_card_position(BattleInfoMgr.BattleArea.AREA_SELF_HAND,i)
-		card.rotation=BattleInfoMgr.calc_card_rotation(i).get_euler()
-		card.render_priority=0
-		print(card.position)
-		$SelfHand.add_child(card)
 	#Animation
 
 func draw_card():

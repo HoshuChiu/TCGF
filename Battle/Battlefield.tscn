@@ -152,9 +152,6 @@ libraries = {
 text = "hehe"
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_7b2e4")
-}
 tree_root = SubResource("AnimationNodeStateMachine_fx01p")
 anim_player = NodePath("../Card/AnimationPlayer")
 
