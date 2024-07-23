@@ -1,7 +1,18 @@
 extends Sprite3D
 class_name BasicCard
+enum CardType{
+	MINION,
+	SPELL,
+	WEAPON,
+	CONSTRUCT,
+	OTHER
+}
 
-@export var id:int
+var id:int
+var pack:String
+var type:CardType
+var currentT
+
 @onready var slot:int=-1
 @onready var anim_player:AnimationPlayer=AnimationPlayer.new()
 @onready var anim_lib:AnimationLibrary=AnimationLibrary.new()
@@ -29,6 +40,7 @@ func _ready():
 	collision_shape.size=Vector3(GraphicCtrl.CARD_WIDTH_M,GraphicCtrl.CARD_HEIGHT_M+5,0.01)
 	collision_obj.shape_owner_add_shape(collision_obj.create_shape_owner(self),collision_shape)
 	collision_obj.position=Vector3(0,-2.5,0)
+	collision_obj.shape_owner_set_disabled(0,true)
 	add_child(collision_obj)
 	
 	#Animation
@@ -48,7 +60,6 @@ func _adjust(dest_slot:int):
 		):
 		return
 	if(is_draggable() && is_pressed):
-		print("hehe")
 		return
 	slot=dest_slot
 	render_priority=slot
@@ -97,7 +108,9 @@ func mouse_release():
 	is_pressed=false
 	if is_draggable():
 		collision_shape.size=Vector3(GraphicCtrl.CARD_WIDTH_M,GraphicCtrl.CARD_HEIGHT_M+5,0.01)
-	#_lose_focus()
+	_lose_focus()
+	#TODO:判断松手时条件
+	$"/root/Battlefield/Superdomain".play()
 
 func _hover():
 	#if mouse down todo:
@@ -115,10 +128,10 @@ var mouse_anchor:Vector3
 var pos_anc_diff:Vector3
 func _dragging():
 	if is_draggable():
-		var mouse_pos_adj=(GraphicCtrl.CAMERA_HEIGHT-GraphicCtrl.INFOCARD_HEIGHT)/(GraphicCtrl.CAMERA_HEIGHT-mouse_pos.z)*(mouse_pos-GraphicCtrl.CAMERA_POS)+GraphicCtrl.CAMERA_POS
+		var mouse_pos_adj=(GraphicCtrl.CAMERA_HEIGHT-1)/(GraphicCtrl.CAMERA_HEIGHT-mouse_pos.z)*(mouse_pos-GraphicCtrl.CAMERA_POS)+GraphicCtrl.CAMERA_POS
 		var to_pos=mouse_pos_adj-pos_anc_diff
 		var vect=to_pos-GraphicCtrl.CAMERA_POS
-		position=to_pos+vect.normalized()*GraphicCtrl.HANDCARD_PUSH_SCALAR
+		position=to_pos#+vect.normalized()*GraphicCtrl.HANDCARD_PUSH_SCALAR
 		#position.z=GraphicCtrl.INFOCARD_HEIGHT-2
 	pass
 
@@ -130,8 +143,6 @@ func is_draggable()->bool:
 		return false
 
 func _lose_focus():
-	#TODO:判断松手时条件
-	_adjust(slot)
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -160,9 +171,16 @@ func draw(tween_p:Tween,dst_pos:Vector3,dst_rot:Vector3):
 	tween.parallel().tween_property(self,"rotation",dst_rot,1)
 
 func on_draw(arg):
-	slot=arg
-	render_priority=arg
+	slot=BattleInfoMgr.self_card_hand_count
+	render_priority=BattleInfoMgr.self_card_hand_count
+	pack=arg[0]
+	id=arg[1]
+	#查找卡牌信息
 	area=BattleInfoMgr.BattleArea.AREA_SELF_HAND
 
 func draw_done(args):
 	already_in_hand=true
+	collision_obj.shape_owner_set_disabled(0,false)
+
+#func on_play(args):
+#	

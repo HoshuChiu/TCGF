@@ -7,7 +7,12 @@ func draw():
 	#确定施放对象
 	var card=$"../SelfHeap".get_child(0)
 	var dst_slot:int=BattleInfoMgr.self_card_hand_count
-	exec_command("draw",card,dst_slot,dst_slot,null,null,null,card,card)
+	var pack_id:String="1"
+	var card_id:int=randi()%10
+	exec_command("draw",card,dst_slot,[pack_id,card_id],null,null,null,card,card)
+
+func play():
+	print("play")
 
 func exec_command(
 	command:String,
