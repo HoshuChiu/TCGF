@@ -91,7 +91,7 @@ static func calc_card_position(area:BattleArea,slot:int)->Vector3:
 			y=0
 	return Vector3(x,y,z)
 	
-static func calc_card_rotation(slot:int)->Quaternion:
+static func calc_card_rotation(area:BattleArea,slot:int)->Vector3:
 	var z:float
 	var space=GraphicCtrl.HANDCARD_SPACE_CTRL/self_card_hand_count
 	if space>GraphicCtrl.HANDCARD_MAX_SPACE:
@@ -100,7 +100,7 @@ static func calc_card_rotation(slot:int)->Quaternion:
 		z=(space+(self_card_hand_count/2-1)*space*2-slot*space*2)/GraphicCtrl.HANDCARD_ARC_R
 	else:
 		z=(space*(self_card_hand_count-1)-2*slot*space)/GraphicCtrl.HANDCARD_ARC_R
-	return Quaternion.from_euler(Vector3(0,0,z))
+	return Vector3(0,0,z)
 # TODO: 动态改变
 static func _get_job_name(job_id:int)->String:
 	match job_id:

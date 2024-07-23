@@ -5,7 +5,7 @@ class_name BF
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
+	add_user_signal("mouse_pressed")
 	$MainCamera.position=Vector3(0,GraphicCtrl.CAMERA_Y_OFFSET,GraphicCtrl.CAMERA_HEIGHT)
 	
 	# TODO:Get Battle Infomations
@@ -29,14 +29,6 @@ func _ready():
 		$OppoHeap.add_child(card)
 	
 	#Animation
-
-func draw_card():
-	var card:BasicCard=$SelfHeap.get_child(0)
-	$SelfHeap.remove_child(card)
-	$SelfHand.repos_hand_cards(1,BattleInfoMgr.self_card_hand_count-1)
-	$SelfHand.add_child(card)
-	card.on_draw()
-	pass
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -59,5 +51,11 @@ func _physics_process(delta):
 		var card:BasicCard=result["collider"].shape_owner_get_owner(result["shape"])
 		if(card.area==BattleInfoMgr.BattleArea.AREA_SELF_HAND):
 			$SelfHand.on_card_hovered(card.slot)
+			card.mouse_pos=result["position"]
 	else:
 		$SelfHand.on_hover_cancel()
+
+func _input(event):
+	if event is InputEventMouseButton:  
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:  
+			pass

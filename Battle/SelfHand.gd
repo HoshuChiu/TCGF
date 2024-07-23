@@ -22,8 +22,22 @@ func repos_hand_cards(count:int,position:int):
 			child.on_adjust(child.slot)
 	pass
 
+func on_draw(args):
+	BattleInfoMgr.self_card_hand_count+=1
+	
+func draw_done(args):
+	add_child(args)
+
+func readjust():
+	for child in get_children():
+		child.on_adjust(child.slot)
+	pass
+
 func on_card_hovered(slot:int):
 	if hovered_slot==slot:
+		for child in get_children():
+			if child.slot==slot:
+				child.on_hover()
 		return
 	elif _anim_enable==true:
 		for child in get_children():

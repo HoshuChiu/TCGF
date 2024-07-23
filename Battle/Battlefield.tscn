@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bel073bv2jmwl"]
+[gd_scene load_steps=10 format=3 uid="uid://bel073bv2jmwl"]
 
 [ext_resource type="Script" path="res://Battle/script/Battlefield.gd" id="1_uh0kt"]
 [ext_resource type="Texture2D" uid="uid://bqgmtty64ja1" path="res://Sketch/card_bkg_0.png" id="2_crw8x"]
+[ext_resource type="Script" path="res://Battle/SelfHeap.gd" id="4_kjnty"]
 [ext_resource type="Texture2D" uid="uid://cidjtmcuslgyk" path="res://Sketch/bf1.png" id="4_m4ir4"]
+[ext_resource type="Script" path="res://Battle/script/Superdomain.gd" id="5_bncey"]
 [ext_resource type="Script" path="res://Battle/SelfHand.gd" id="5_j8h6w"]
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_fx01p"]
@@ -73,6 +75,7 @@ visible = false
 texture = ExtResource("4_m4ir4")
 
 [node name="SelfHeap" type="Node" parent="."]
+script = ExtResource("4_kjnty")
 
 [node name="OppoHeap" type="Node" parent="."]
 
@@ -89,4 +92,7 @@ libraries = {
 "battle_anim": SubResource("AnimationLibrary_s8go2")
 }
 
-[connection signal="pressed" from="Button" to="." method="draw_card"]
+[node name="Superdomain" type="Node" parent="."]
+script = ExtResource("5_bncey")
+
+[connection signal="pressed" from="Button" to="Superdomain" method="draw"]
