@@ -13,15 +13,6 @@ func _process(delta):
 	_anim_timer+=delta
 	pass
 
-func repos_hand_cards(count:int,position:int):
-	BattleInfoMgr.self_card_hand_count+=count
-	for child in get_children():
-		if child.slot>position:
-			child.on_adjust(child.slot+count)
-		else:
-			child.on_adjust(child.slot)
-	pass
-
 func on_draw(args):
 	BattleInfoMgr.self_card_hand_count+=1
 	
