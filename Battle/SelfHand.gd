@@ -21,39 +21,5 @@ func draw_done(args):
 
 func readjust():
 	for child in get_children():
-		child.on_adjust(child.slot)
+		child._adjust(child.slot)
 	pass
-
-func on_card_hovered(slot:int):
-	if hovered_slot==slot:
-		for child in get_children():
-			if child.slot==slot:
-				child.on_hover()
-		return
-	elif _anim_enable==true:
-		for child in get_children():
-			if child.slot==slot:
-				child.on_show()
-			elif child.slot==hovered_slot:
-				child.on_adjust(child.slot)
-				pass
-		hovered_slot=slot
-		_anim_enable=false
-		_anim_timer=0
-	else:
-		if _anim_timer>0.1:
-			_anim_enable=true
-
-func on_hover_cancel():
-	if hovered_slot==-1:
-		return
-	if _anim_enable:
-		for child in get_children():
-			if child.slot==hovered_slot:
-				child.on_adjust(child.slot)
-		hovered_slot=-1
-		_anim_timer=0
-		_anim_enable=false
-	else:
-		if _anim_timer>0.1:
-			_anim_enable=true

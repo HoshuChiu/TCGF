@@ -44,6 +44,7 @@ enum BattleArea{
 	AREA_SELF_CHOICE,
 	AREA_SELF_CAST,
 	AREA_SELF_WEAPON,
+	AREA_SELF_SECRET,
 	AREA_SELF_GRAVE,
 	AREA_OPPO_HAND,
 	AREA_OPPO_HEAP,
@@ -51,6 +52,7 @@ enum BattleArea{
 	AREA_OPPO_CHOICE,
 	AREA_OPPO_CAST,
 	AREA_OPPO_WEAPON,
+	AREA_OPPO_SECRET,
 	AREA_OPPO_GRAVE,
 	AREA_INFO
 }
@@ -92,15 +94,25 @@ static func calc_card_position(area:BattleArea,slot:int)->Vector3:
 	return Vector3(x,y,z)
 	
 static func calc_card_rotation(area:BattleArea,slot:int)->Vector3:
-	var z:float
-	var space=GraphicCtrl.HANDCARD_SPACE_CTRL/self_card_hand_count
-	if space>GraphicCtrl.HANDCARD_MAX_SPACE:
-		space=GraphicCtrl.HANDCARD_MAX_SPACE
-	if self_card_hand_count%2==0:
-		z=(space+(self_card_hand_count/2-1)*space*2-slot*space*2)/GraphicCtrl.HANDCARD_ARC_R
-	else:
-		z=(space*(self_card_hand_count-1)-2*slot*space)/GraphicCtrl.HANDCARD_ARC_R
-	return Vector3(0,0,z)
+	var x:float=0
+	var y:float=0
+	var z:float=0
+	match area:
+		BattleArea.AREA_OPPO_HEAP:
+			y=1.57
+			z=1.57
+		BattleArea.AREA_SELF_HEAP:
+			y=1.57
+			z=1.57
+		BattleArea.AREA_SELF_HAND:
+			var space=GraphicCtrl.HANDCARD_SPACE_CTRL/self_card_hand_count
+			if space>GraphicCtrl.HANDCARD_MAX_SPACE:
+				space=GraphicCtrl.HANDCARD_MAX_SPACE
+			if self_card_hand_count%2==0:
+				z=(space+(self_card_hand_count/2-1)*space*2-slot*space*2)/GraphicCtrl.HANDCARD_ARC_R
+			else:
+				z=(space*(self_card_hand_count-1)-2*slot*space)/GraphicCtrl.HANDCARD_ARC_R
+	return Vector3(x,y,z)
 # TODO: 动态改变
 static func _get_job_name(job_id:int)->String:
 	match job_id:

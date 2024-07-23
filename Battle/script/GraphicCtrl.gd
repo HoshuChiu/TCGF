@@ -4,6 +4,7 @@ class_name GraphicCtrl
 #视口
 const CAMERA_HEIGHT=45.0
 const CAMERA_Y_OFFSET=-0.5
+const CAMERA_POS=Vector3(0,0,45)
 
 #卡牌
 const CARD_THICKNESS=0.02
@@ -25,6 +26,7 @@ const HANDCARD_Z_OFFSET=0
 const HANDCARD_SPACE_CTRL=6.4
 const HANDCARD_MAX_SPACE=0.9
 const HANDCARD_MAX_PRIORITY=99
+const HANDCARD_PUSH_SCALAR=3#点击卡牌时卡牌下沉的深度，单位为m
 
 #信息区
 const INFOCARD_HEIGHT=15.0

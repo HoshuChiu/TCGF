@@ -8,10 +8,11 @@ class_name BasicCard
 @onready var bkg_pic=Sprite3D.new()
 @onready var collision_shape:BoxShape3D=BoxShape3D.new()
 @onready var collision_obj:Area3D=Area3D.new()
-@onready var area:BattleInfoMgr.BattleArea=BattleInfoMgr.BattleArea.AREA_VOID
+var area:BattleInfoMgr.BattleArea=BattleInfoMgr.BattleArea.AREA_VOID
 var tween:Tween
 var already_in_hand:bool
 var mouse_pos:Vector3
+var is_pressed:bool
 
 func _init(id:int):
 	pass
@@ -34,13 +35,27 @@ func _ready():
 	anim_player.add_animation_library("battle",anim_lib)
 	add_child(anim_player)
 
-func on_adjust(dest_slot:int):
+func _adjust(dest_slot:int):
+	#只有在这里面可以adjust
+	if (area!=BattleInfoMgr.BattleArea.AREA_SELF_HAND &&
+		area!=BattleInfoMgr.BattleArea.AREA_OPPO_HAND &&
+		area!=BattleInfoMgr.BattleArea.AREA_SELF_CHOICE &&
+		area!=BattleInfoMgr.BattleArea.AREA_SELF_SECRET &&
+		area!=BattleInfoMgr.BattleArea.AREA_OPPO_SECRET &&
+		area!=BattleInfoMgr.BattleArea.AREA_OPPO_CHOICE &&
+		area!=BattleInfoMgr.BattleArea.AREA_SELF_BATTLEFIELD &&
+		area!=BattleInfoMgr.BattleArea.AREA_OPPO_BATTLEFIELD
+		):
+		return
+	if(is_draggable() && is_pressed):
+		print("hehe")
+		return
 	slot=dest_slot
 	render_priority=slot
-	var dst_pos=BattleInfoMgr.calc_card_position(BattleInfoMgr.BattleArea.AREA_SELF_HAND,slot)
-	var dst_qua=BattleInfoMgr.calc_card_rotation(BattleInfoMgr.BattleArea.AREA_SELF_HAND,slot)
-
-	if tween.is_running():
+	var dst_pos=BattleInfoMgr.calc_card_position(area,slot)
+	var dst_qua=BattleInfoMgr.calc_card_rotation(area,slot)
+	
+	if tween:
 		tween.kill()
 	tween = get_tree().create_tween()
 	tween.set_parallel(true)
@@ -49,29 +64,75 @@ func on_adjust(dest_slot:int):
 	draw_done(null)
 	pass
 	
-func on_show():
+func _show():
 	render_priority=GraphicCtrl.HANDCARD_MAX_PRIORITY
 	var x:float=((GraphicCtrl.CAMERA_HEIGHT-GraphicCtrl.INFOCARD_HEIGHT)*1.0/GraphicCtrl.CAMERA_HEIGHT)*position.x
 	
-	#
+	if tween:
+		if tween.is_running():
+			return
 	tween = get_tree().create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(self, "position", Vector3(x,GraphicCtrl.INFOCARD_INHAND_Y_OFFSET,GraphicCtrl.INFOCARD_HEIGHT), 0.02)
 	tween.tween_property(self, "rotation", Vector3(0,0,0), 0.01)
 	
-func on_hover():
-	#if mouse down todo:
+func mouse_enter():
+	match area:
+		BattleInfoMgr.BattleArea.AREA_SELF_HAND:
+			_show()
+	pass
 	
-	if already_in_hand:
+func mouse_exit():
+	is_pressed=false
+	_lose_focus()
+
+func mouse_press():
+	is_pressed=true
+	mouse_anchor=mouse_pos
+	pos_anc_diff=mouse_anchor-position
+	if is_draggable():
+		collision_shape.size=Vector3(50,50,0.01)
+	
+func mouse_release():
+	is_pressed=false
+	if is_draggable():
+		collision_shape.size=Vector3(GraphicCtrl.CARD_WIDTH_M,GraphicCtrl.CARD_HEIGHT_M+5,0.01)
+	#_lose_focus()
+
+func _hover():
+	#if mouse down todo:
+	if is_pressed:
+		_dragging()
+	if area==BattleInfoMgr.BattleArea.AREA_SELF_HAND && already_in_hand&&!is_pressed:
 		render_priority=GraphicCtrl.HANDCARD_MAX_PRIORITY
 		var xx:float=BattleInfoMgr.calc_card_position(BattleInfoMgr.BattleArea.AREA_SELF_HAND,slot).x
 		var x:float=((GraphicCtrl.CAMERA_HEIGHT-GraphicCtrl.INFOCARD_HEIGHT)*1.0/GraphicCtrl.CAMERA_HEIGHT)*xx
 		position=Vector3(x,GraphicCtrl.INFOCARD_INHAND_Y_OFFSET,GraphicCtrl.INFOCARD_HEIGHT)
 		rotation=Vector3(0,0,0)
-		
-func on_dragging():
+
+
+var mouse_anchor:Vector3
+var pos_anc_diff:Vector3
+func _dragging():
+	if is_draggable():
+		var mouse_pos_adj=(GraphicCtrl.CAMERA_HEIGHT-GraphicCtrl.INFOCARD_HEIGHT)/(GraphicCtrl.CAMERA_HEIGHT-mouse_pos.z)*(mouse_pos-GraphicCtrl.CAMERA_POS)+GraphicCtrl.CAMERA_POS
+		var to_pos=mouse_pos_adj-pos_anc_diff
+		var vect=to_pos-GraphicCtrl.CAMERA_POS
+		position=to_pos+vect.normalized()*GraphicCtrl.HANDCARD_PUSH_SCALAR
+		#position.z=GraphicCtrl.INFOCARD_HEIGHT-2
 	pass
 
+func is_draggable()->bool:
+	#TODO:增加判断条件
+	if area==BattleInfoMgr.BattleArea.AREA_SELF_HAND:
+		return true
+	else:
+		return false
+
+func _lose_focus():
+	#TODO:判断松手时条件
+	_adjust(slot)
+	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

@@ -2,6 +2,8 @@ extends Node3D
 class_name BF
 
 @export var x2=1
+signal mouse_left_press
+signal mouse_left_release
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,10 +34,14 @@ func _ready():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	hover_timer+=delta
 	pass
 
 const RAY_LENGTH = 200
 
+var hovering_card:BasicCard
+@onready var hover_action_enable:bool=true
+@onready var hover_timer:float=0
 func _physics_process(delta):
 	var space_state = get_world_3d().direct_space_state
 	var cam = $MainCamera
@@ -49,13 +55,49 @@ func _physics_process(delta):
 	var result = space_state.intersect_ray(query)
 	if not result.is_empty():
 		var card:BasicCard=result["collider"].shape_owner_get_owner(result["shape"])
-		if(card.area==BattleInfoMgr.BattleArea.AREA_SELF_HAND):
-			$SelfHand.on_card_hovered(card.slot)
+		#if(card.area==BattleInfoMgr.BattleArea.AREA_SELF_HAND):
+			#$SelfHand.on_card_hovered(card.slot)
+			#card.on_hover()
+			#card.mouse_pos=result["position"]
+		if card == hovering_card:
 			card.mouse_pos=result["position"]
+			card._hover()
+		elif hover_action_enable:
+		#else:
+			if hovering_card:
+				hovering_card._adjust(hovering_card.slot)
+				#TODO:取消hoveringcard的信号
+				disconnect("mouse_left_press",hovering_card.mouse_press)
+				disconnect("mouse_left_release",hovering_card.mouse_release)
+				hovering_card.mouse_exit()
+			card.mouse_enter()
+			hovering_card=card
+			connect("mouse_left_press",card.mouse_press)
+			connect("mouse_left_release",card.mouse_release)
+			hover_action_enable=false
+			hover_timer=0
+		else:
+			if hover_timer>0.01:
+				hover_action_enable=true
 	else:
-		$SelfHand.on_hover_cancel()
+		if hovering_card:
+			if hover_action_enable:
+				hovering_card._adjust(hovering_card.slot)
+				#TODO:取消hoveringcard的信号
+				disconnect("mouse_left_press",hovering_card.mouse_press)
+				disconnect("mouse_left_release",hovering_card.mouse_release)
+				hovering_card.mouse_exit()
+				hovering_card=null
+				hover_action_enable=false
+				hover_timer=0
+			elif hover_timer>0.01:
+				hover_action_enable=true
+		pass
 
 func _input(event):
 	if event is InputEventMouseButton:  
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:  
-			pass
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:  
+				emit_signal("mouse_left_press")
+			else:
+				emit_signal("mouse_left_release")
