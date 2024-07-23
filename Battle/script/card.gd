@@ -12,6 +12,7 @@ var id:int
 var pack:String
 var type:CardType
 var currentT
+var extension
 
 @onready var slot:int=-1
 @onready var anim_player:AnimationPlayer=AnimationPlayer.new()
@@ -148,16 +149,19 @@ func _lose_focus():
 func _process(delta):
 	pass
 
-func apply_anim(command:String,args:Variant)->Tween:
+func apply_anim(command:String,args:Variant,extargs:Variant)->Tween:
 	if tween:
 		tween.kill()
 	tween = get_tree().create_tween()
-	tween.tween_callback(anim_callback.bind(command,args))
+	tween.tween_callback(anim_callback.bind(command,args,extargs))
 	return tween
 
-func anim_callback(command:String,args:Variant):
+func anim_callback(command:String,args:Variant,extargs:Variant):
 	if has_method(command+"_done"):
 		call(command+"_done",args)
+	if extension:
+		if extension.has_method(command+"_done"):
+			extension.call(command+"_done",extargs)
 
 func draw(tween_p:Tween,dst_pos:Vector3,dst_rot:Vector3):
 	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_EXPO)

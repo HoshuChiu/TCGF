@@ -9,7 +9,7 @@ func draw():
 	var dst_slot:int=BattleInfoMgr.self_card_hand_count
 	var pack_id:String="1"
 	var card_id:int=randi()%10
-	exec_command("draw",card,dst_slot,[pack_id,card_id],null,null,null,card,card)
+	exec_command("draw",card,dst_slot,[pack_id,card_id],null,null,null,null,null,card,card)
 
 func play():
 	print("play")
@@ -19,9 +19,11 @@ func exec_command(
 	card:Node,
 	dst_slot:int,
 	card_on_arg:Variant,
+	cardext_on_arg:Variant,
 	src_on_arg:Variant,
 	dst_on_arg:Variant,
 	card_done_arg:Variant,
+	cardext_done_arg:Variant,
 	src_done_arg:Variant,
 	dst_done_arg:Variant):
 	var command_objs=get_command_objs(command)
@@ -32,6 +34,9 @@ func exec_command(
 	#变更施法对象信息
 	if card.has_method("on_"+command):
 		card.call("on_"+command,card_on_arg)
+	if card.extension:
+		if card.extension.has_method("on_"+command):
+			card.extension.call("on_"+command,cardext_on_arg)
 	#变更始发地信息
 	if src.has_method("on_"+command):
 		src.call("on_"+command,src_on_arg)
@@ -42,10 +47,11 @@ func exec_command(
 	#应用施法对象的动画
 	var dst_pos=BattleInfoMgr.calc_card_position(dst_area,dst_slot)
 	var dst_rot=BattleInfoMgr.calc_card_rotation(dst_area,dst_slot)
-	if card.has_method(command):
-		card.call(command,card.apply_anim(command,card_done_arg),dst_pos,dst_rot)
+	if card.extension:
+		if card.extension.has_method(command):
+			card.extension.call(command,card.apply_anim(command,card_done_arg,cardext_done_arg),dst_pos,dst_rot)
 	else:
-		anims.call(command,card,card.apply_anim(command,card_done_arg),dst_pos,dst_rot)
+		anims.call(command,card,card.apply_anim(command,card_done_arg,cardext_done_arg),dst_pos,dst_rot)
 		
 	#应用Readjust动画
 	dst.readjust()
