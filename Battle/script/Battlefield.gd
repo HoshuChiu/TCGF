@@ -14,10 +14,8 @@ func _ready():
 	# TODO:Get Battle Infomations
 	BattleInfoMgr.init_battle("我是你爹","我也是你爹",1,2)
 	# 
-	var cardA=preload("res://Battle/cardtest.tscn").instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
-	var cardAS=preload("res://Battle/script/card.gd")
-	#cardA.set_script(cardAS)
-	#cardA._show()
+	CardLoader.load("Classic",2)
+	CardLoader.load("Classic",1)
 	for i in range(0,BattleInfoMgr.self_card_heap_count):
 		var card=BasicCard.new(0)
 		card.rotate_y(1.57)
