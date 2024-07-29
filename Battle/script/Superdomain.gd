@@ -1,17 +1,17 @@
 extends Node
 class_name Superdomain
 
-@onready var anims:Anims=Anims.new()
-
 func init():
 	pass
 
 func regdomain(name:String):
 	pass
 
+#根据名字获取区域的对象实例
 func domain(name:String)->Node:
 	return get_node(name)
-	
+
+#抽牌动作入口
 func draw(pack:String,id:int):
 	var self_heap=domain("self_heap")
 	var self_hand=domain("self_hand")
@@ -21,9 +21,10 @@ func draw(pack:String,id:int):
 	card.CardInfo.position=plc[0]
 	card.CardInfo.rotation=plc[1]
 	self_hand.Cards.add_child(card)
-	exec_command("draw",card,card.slot,null,null,null,null,null,card.CardInfo,null,null)
+	exec_anim("draw",card,card.slot,self_heap,self_hand,null,null,null,null,null,card.CardInfo,null,null)
 	self_heap.Cards.remove_child(self_heap.Cards.get_child(0))
-	
+
+#设置区域动作入口
 func setdomain(domain:String,cards:Array[BasicCard]):
 	var d=domain(domain)
 	var i=0
@@ -34,13 +35,17 @@ func setdomain(domain:String,cards:Array[BasicCard]):
 		card.rotation=plc[1]
 		i+=1
 
+#打出动作入口
 func play():
 	print("play")
 
-func exec_command(
+#动画执行流程中统一的部分
+func exec_anim(
 	command:String,
 	card:Node,
 	dst_slot:int,
+	src:Node,
+	dst:Node,
 	card_on_arg:Variant,
 	cardext_on_arg:Variant,
 	src_on_arg:Variant,
@@ -49,11 +54,6 @@ func exec_command(
 	op_node:Node,
 	src_done_arg:Variant,
 	dst_done_arg:Variant):
-	var command_objs=get_command_objs(command)
-	var src_name:String=command_objs["src"]
-	var dst_name:String=command_objs["dst"]
-	var src:Node=domain(src_name)
-	var dst:Node=domain(dst_name)
 	#变更施法对象信息
 	if card.has_method("on_"+command):
 		card.call("on_"+command,card_on_arg)
@@ -82,10 +82,3 @@ func exec_command(
 		dst.call(command+"_done",dst_done_arg)
 	#上报服务器
 	
-func get_command_objs(command:String)->Dictionary:
-	var ret:Dictionary
-	match command:
-		"draw":
-			ret["src"]="self_heap"
-			ret["dst"]="self_hand"
-	return ret

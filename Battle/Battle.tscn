@@ -1,14 +1,14 @@
 [gd_scene load_steps=13 format=3 uid="uid://bel073bv2jmwl"]
 
-[ext_resource type="Script" path="res://Battle/script/Battlefield.gd" id="1_uh0kt"]
-[ext_resource type="Texture2D" uid="uid://bqgmtty64ja1" path="res://Sketch/card_bkg_0.png" id="2_crw8x"]
-[ext_resource type="Script" path="res://Battle/DebugTool.gd" id="4_2moh2"]
-[ext_resource type="Script" path="res://Battle/Domain/SelfHeap.gd" id="4_kjnty"]
-[ext_resource type="Texture2D" uid="uid://cidjtmcuslgyk" path="res://Sketch/bf1.png" id="4_m4ir4"]
-[ext_resource type="Script" path="res://Battle/script/Superdomain.gd" id="5_bncey"]
-[ext_resource type="Script" path="res://Battle/Domain/SelfHand.gd" id="5_j8h6w"]
-[ext_resource type="Script" path="res://Battle/Domain/oppo_heap.gd" id="6_fjnhr"]
-[ext_resource type="Script" path="res://Battle/Domain/self_minion.gd" id="9_5oqmt"]
+[ext_resource type="Script" path="res://Battle/Script/Battle.gd" id="1_3knij"]
+[ext_resource type="Texture2D" uid="uid://bqgmtty64ja1" path="res://Sketch/card_bkg_0.png" id="2_xhn41"]
+[ext_resource type="Texture2D" uid="uid://cidjtmcuslgyk" path="res://Sketch/bf1.png" id="3_egnil"]
+[ext_resource type="Script" path="res://Battle/DebugTool.gd" id="4_wl40b"]
+[ext_resource type="Script" path="res://Battle/Script/Superdomain.gd" id="5_3ek0d"]
+[ext_resource type="Script" path="res://Battle/Domain/SelfHeap.gd" id="6_hf3w8"]
+[ext_resource type="Script" path="res://Battle/Domain/oppo_heap.gd" id="7_n8lm6"]
+[ext_resource type="Script" path="res://Battle/Domain/SelfHand.gd" id="8_k8u83"]
+[ext_resource type="Script" path="res://Battle/Domain/self_minion.gd" id="9_scbpq"]
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_fx01p"]
 states/Start/position = Vector2(364, 100)
@@ -53,8 +53,8 @@ _data = {
 "draw_card": SubResource("Animation_jrat8")
 }
 
-[node name="Battlefield" type="Node3D"]
-script = ExtResource("1_uh0kt")
+[node name="Battle" type="Node3D"]
+script = ExtResource("1_3knij")
 
 [node name="Node3D" type="Node3D" parent="."]
 
@@ -65,7 +65,7 @@ fov = 25.0
 [node name="Card" type="Sprite3D" parent="."]
 transform = Transform3D(4.37038e-08, -0.999826, 0.0186566, -1, -4.37114e-08, 0, 8.15505e-10, -0.0186566, -0.999826, 0, 0, 0)
 visible = false
-texture = ExtResource("2_crw8x")
+texture = ExtResource("2_xhn41")
 
 [node name="Label" type="Label3D" parent="Card"]
 text = "hehe"
@@ -75,7 +75,7 @@ tree_root = SubResource("AnimationNodeStateMachine_fx01p")
 
 [node name="Field" type="Sprite3D" parent="."]
 visible = false
-texture = ExtResource("4_m4ir4")
+texture = ExtResource("3_egnil")
 
 [node name="OpenDebugTool" type="Button" parent="."]
 offset_right = 113.0
@@ -87,7 +87,7 @@ offset_left = 40.0
 offset_top = 52.0
 offset_right = 400.0
 offset_bottom = 125.0
-script = ExtResource("4_2moh2")
+script = ExtResource("4_wl40b")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="DebugTool"]
 layout_mode = 2
@@ -123,21 +123,22 @@ libraries = {
 }
 
 [node name="Superdomain" type="Node" parent="."]
-script = ExtResource("5_bncey")
+script = ExtResource("5_3ek0d")
 
 [node name="self_heap" type="Node" parent="Superdomain"]
-script = ExtResource("4_kjnty")
+script = ExtResource("6_hf3w8")
 
 [node name="oppo_heap" type="Node" parent="Superdomain"]
-script = ExtResource("6_fjnhr")
+script = ExtResource("7_n8lm6")
 
 [node name="self_hand" type="Node" parent="Superdomain"]
-script = ExtResource("5_j8h6w")
+script = ExtResource("8_k8u83")
 
 [node name="self_minion" type="Node" parent="Superdomain"]
-script = ExtResource("9_5oqmt")
+script = ExtResource("9_scbpq")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 
 [connection signal="pressed" from="OpenDebugTool" to="DebugTool" method="toggle_visibility"]
 [connection signal="pressed" from="DebugTool/HBoxContainer/Button" to="." method="draw_test"]
+[connection signal="pressed" from="DebugTool/HBoxContainer/Button" to="DebugTool" method="draw_test"]
