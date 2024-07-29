@@ -95,4 +95,6 @@ libraries = {
 [node name="Superdomain" type="Node" parent="."]
 script = ExtResource("5_bncey")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+
 [connection signal="pressed" from="Button" to="Superdomain" method="draw"]

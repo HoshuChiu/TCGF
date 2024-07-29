@@ -26,7 +26,7 @@ var already_in_hand:bool
 var mouse_pos:Vector3
 var is_pressed:bool
 
-func _init(id:int):
+func _init(id:int=0):
 	pass
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -181,6 +181,10 @@ func on_draw(arg):
 	id=arg[1]
 	#查找卡牌信息
 	area=BattleInfoMgr.BattleArea.AREA_SELF_HAND
+	var shaders=ShaderMaterial.new()
+	shaders.shader=preload("res://Battle/card_in_hand.gdshader")
+	if id>5:
+		material_override=shaders
 
 func draw_done(args):
 	already_in_hand=true

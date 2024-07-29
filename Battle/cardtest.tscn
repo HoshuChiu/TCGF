@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ch1kuap6n4vl2"]
+
+[ext_resource type="Script" path="res://Battle/script/card.gd" id="1_pqpq6"]
+
+[node name="CardA" type="Sprite3D"]
+script = ExtResource("1_pqpq6")
