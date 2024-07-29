@@ -33,7 +33,9 @@ var slot:int=-1
 @onready var collision_obj:Area3D=Area3D.new()
 
 var CardInfo:Sprite3D=Sprite3D.new()
+var Minion:Sprite3D
 var tween:Tween
+var hovering_obj:Node3D
 var already_in_hand:bool
 var mouse_pos:Vector3
 var is_pressed:bool
@@ -54,7 +56,7 @@ func _ready():
 	CardInfo.add_child(bkg_pic)
 	#Interaction
 	collision_shape.size=Vector3(GraphicCtrl.CARD_WIDTH_M,GraphicCtrl.CARD_HEIGHT_M+5,0.01)
-	collision_obj.shape_owner_add_shape(collision_obj.create_shape_owner(self),collision_shape)
+	collision_obj.shape_owner_add_shape(collision_obj.create_shape_owner(CardInfo),collision_shape)
 	collision_obj.position=Vector3(0,-2.5,0)
 	collision_obj.shape_owner_set_disabled(0,true)
 	CardInfo.add_child(collision_obj)
@@ -91,37 +93,10 @@ func set_render_priority(priority:int):
 		if c is Label3D:
 			c.render_priority=priority*2+1
 
-func _adjust(dest_slot:int):
-	#只有在这里面可以adjust
-	var area=get_parent().name
-	if (area!="self_hand" &&
-		area!="oppo_hand" &&
-		area!="self_choice" &&
-		area!="self_secret" &&
-		area!="oppo_secret" &&
-		area!="oppo_choice" &&
-		area!="self_minion" &&
-		area!="oppo_minion"
-		):
-		return
-	if(is_draggable() && is_pressed):
-		return
-	slot=dest_slot
-	set_render_priority(slot)
-	var dst_pos=get_parent().get_parent().placement(slot)[0]
-	var dst_qua=get_parent().get_parent().placement(slot)[1]
-	if tween:
-		tween.kill()
-	tween = get_tree().create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(CardInfo, "position", dst_pos, 0.1).from_current()
-	tween.tween_property(CardInfo, "rotation", dst_qua, 0.1).from_current()
-	draw_done(null)
-	pass
-	
+
 func _show():
 	set_render_priority(GraphicCtrl.HANDCARD_MAX_PRIORITY)
-	var x:float=((GraphicCtrl.CAMERA_HEIGHT-GraphicCtrl.INFOCARD_HEIGHT)*1.0/GraphicCtrl.CAMERA_HEIGHT)*position.x
+	var x:float=((GraphicCtrl.CAMERA_HEIGHT-GraphicCtrl.INFOCARD_HEIGHT)*1.0/GraphicCtrl.CAMERA_HEIGHT)*hovering_obj.position.x
 	
 	if tween:
 		if tween.is_running():
@@ -203,6 +178,12 @@ func anim_callback(command:String,args:Variant):
 	if has_method(command+"_done"):
 		call(command+"_done",args)
 
+func on_draw(args):
+	if type==0: #说明是随从
+		Minion=Sprite3D.new()
+		add_child(Minion)
+		Minion.texture=preload("res://Sketch/card_fg_minion_0.png")
+		
 func draw(tween_p:Tween,dst_pos:Vector3,dst_rot:Vector3):
 	tween_p.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_EXPO)
 	tween_p.tween_property(CardInfo,"position",Vector3(GraphicCtrl.INFOCARD_DRAW_X_OFFSET,
@@ -217,6 +198,3 @@ func draw(tween_p:Tween,dst_pos:Vector3,dst_rot:Vector3):
 func draw_done(args):
 	already_in_hand=true
 	collision_obj.shape_owner_set_disabled(0,false)
-
-#func on_play(args):
-#	

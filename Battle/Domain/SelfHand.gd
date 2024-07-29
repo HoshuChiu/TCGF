@@ -17,10 +17,25 @@ func _process(delta):
 	_anim_timer+=delta
 	pass
 
-func readjust():
+func readjust(slot:int=-1):
 	for child in Cards.get_children():
+		if slot!=-1&&slot!=child.slot:
+			continue
+		# 加上这个判断，防止在抽牌的时候发生readjust导致提前中断抽牌动画
 		if child.already_in_hand:
-			child._adjust(child.slot)
+			if(child.is_draggable() && child.is_pressed):
+				continue
+			child.set_render_priority(child.slot)
+			var dst_pos=placement(child.slot)[0]
+			var dst_qua=placement(child.slot)[1]
+			var tween=child.tween
+			if tween:
+				tween.kill()
+			tween = get_tree().create_tween()
+			tween.set_parallel(true)
+			tween.tween_property(child.CardInfo, "position", dst_pos, 0.1).from_current()
+			tween.tween_property(child.CardInfo, "rotation", dst_qua, 0.1).from_current()
+			child.draw_done(null)
 	pass
 
 func placement(slot:int)->Array[Vector3]:

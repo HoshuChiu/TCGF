@@ -11,14 +11,6 @@ func regdomain(name:String):
 
 func domain(name:String)->Node:
 	return get_node(name)
-
-func draw1():
-	#确定施放对象
-	var card=$"../SelfHeap".get_child(0)
-	var dst_slot:int=BattleInfoMgr.self_card_hand_count
-	var pack_id:String="1"
-	var card_id:int=randi()%10
-	exec_command("draw",card,dst_slot,[pack_id,card_id],null,null,null,null,null,card,card)
 	
 func draw(pack:String,id:int):
 	var self_heap=domain("self_heap")

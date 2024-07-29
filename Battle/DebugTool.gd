@@ -1,0 +1,12 @@
+extends VBoxContainer
+
+func toggle_visibility():
+	if self.visible==true:
+		self.visible=false
+		$"../OpenDebugTool".text="打开调试工具"
+	else:
+		self.visible=true
+		$"../OpenDebugTool".text="关闭调试工具"
+	
+func _ready():
+	self.visible=false

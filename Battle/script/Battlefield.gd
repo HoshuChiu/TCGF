@@ -8,8 +8,8 @@ signal mouse_left_release
 var domains:Node
 # Called when the node enters the scene tree for the first time.
 func draw_test():
-	var pack:String=$TextEdit.text
-	var id:String=$TextEdit2.text
+	var pack:String=$DebugTool/HBoxContainer/TextEdit.text
+	var id:String=$DebugTool/HBoxContainer/TextEdit2.text
 	$Superdomain.draw(pack,id.to_int())
 func _ready():
 	$MainCamera.position=Vector3(0,GraphicCtrl.CAMERA_Y_OFFSET,GraphicCtrl.CAMERA_HEIGHT)
@@ -18,8 +18,6 @@ func _ready():
 	# TODO:Get Battle Infomations
 	BattleInfoMgr.init_battle("我是你爹","我也是你爹",1,2)
 	# 
-	
-	
 	var cards_s:Array[BasicCard]
 	for i in range(0,BattleInfoMgr.self_card_heap_count):
 		cards_s.append(BasicCard.new())
@@ -54,18 +52,16 @@ func _physics_process(delta):
 
 	var result = space_state.intersect_ray(query)
 	if not result.is_empty():
-		var card:BasicCard=result["collider"].shape_owner_get_owner(result["shape"])
-		#if(card.area==BattleInfoMgr.BattleArea.AREA_SELF_HAND):
-			#$SelfHand.on_card_hovered(card.slot)
-			#card.on_hover()
-			#card.mouse_pos=result["position"]
+		var obj:Node3D=result["collider"].shape_owner_get_owner(result["shape"])
+		var card:BasicCard=obj.get_parent()
+		card.hovering_obj=obj
 		if card == hovering_card:
 			card.mouse_pos=result["position"]
 			card._hover()
 		elif hover_action_enable:
 		#else:
 			if hovering_card:
-				hovering_card._adjust(hovering_card.slot)
+				hovering_card.get_parent().get_parent().readjust(hovering_card.slot)
 				#TODO:取消hoveringcard的信号
 				disconnect("mouse_left_press",hovering_card.mouse_press)
 				disconnect("mouse_left_release",hovering_card.mouse_release)
@@ -82,7 +78,7 @@ func _physics_process(delta):
 	else:
 		if hovering_card:
 			if hover_action_enable:
-				hovering_card._adjust(hovering_card.slot)
+				hovering_card.get_parent().get_parent().readjust(hovering_card.slot)
 				#TODO:取消hoveringcard的信号
 				disconnect("mouse_left_press",hovering_card.mouse_press)
 				disconnect("mouse_left_release",hovering_card.mouse_release)

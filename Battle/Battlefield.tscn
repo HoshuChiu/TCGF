@@ -1,12 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://bel073bv2jmwl"]
+[gd_scene load_steps=13 format=3 uid="uid://bel073bv2jmwl"]
 
 [ext_resource type="Script" path="res://Battle/script/Battlefield.gd" id="1_uh0kt"]
 [ext_resource type="Texture2D" uid="uid://bqgmtty64ja1" path="res://Sketch/card_bkg_0.png" id="2_crw8x"]
-[ext_resource type="Script" path="res://Battle/SelfHeap.gd" id="4_kjnty"]
+[ext_resource type="Script" path="res://Battle/DebugTool.gd" id="4_2moh2"]
+[ext_resource type="Script" path="res://Battle/Domain/SelfHeap.gd" id="4_kjnty"]
 [ext_resource type="Texture2D" uid="uid://cidjtmcuslgyk" path="res://Sketch/bf1.png" id="4_m4ir4"]
 [ext_resource type="Script" path="res://Battle/script/Superdomain.gd" id="5_bncey"]
-[ext_resource type="Script" path="res://Battle/SelfHand.gd" id="5_j8h6w"]
-[ext_resource type="Script" path="res://Battle/oppo_heap.gd" id="6_fjnhr"]
+[ext_resource type="Script" path="res://Battle/Domain/SelfHand.gd" id="5_j8h6w"]
+[ext_resource type="Script" path="res://Battle/Domain/oppo_heap.gd" id="6_fjnhr"]
+[ext_resource type="Script" path="res://Battle/Domain/self_minion.gd" id="9_5oqmt"]
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_fx01p"]
 states/Start/position = Vector2(364, 100)
@@ -75,25 +77,44 @@ tree_root = SubResource("AnimationNodeStateMachine_fx01p")
 visible = false
 texture = ExtResource("4_m4ir4")
 
-[node name="Button" type="Button" parent="."]
-anchors_preset = -1
-anchor_right = 0.043
-anchor_bottom = 0.056
-offset_right = -0.536003
-offset_bottom = -0.288002
+[node name="OpenDebugTool" type="Button" parent="."]
+offset_right = 113.0
+offset_bottom = 36.0
+text = "打开调试工具"
+
+[node name="DebugTool" type="VBoxContainer" parent="."]
+offset_left = 40.0
+offset_top = 52.0
+offset_right = 400.0
+offset_bottom = 125.0
+script = ExtResource("4_2moh2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DebugTool"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Button" type="Button" parent="DebugTool/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
 text = "抽卡"
 
-[node name="TextEdit" type="TextEdit" parent="."]
-offset_left = 56.0
-offset_right = 197.0
-offset_bottom = 37.0
+[node name="Label" type="Label" parent="DebugTool/HBoxContainer"]
+layout_mode = 2
+text = "卡包系列"
+
+[node name="TextEdit" type="TextEdit" parent="DebugTool/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Classic"
 
-[node name="TextEdit2" type="TextEdit" parent="."]
-offset_left = 216.0
-offset_top = 1.0
-offset_right = 357.0
-offset_bottom = 38.0
+[node name="Label2" type="Label" parent="DebugTool/HBoxContainer"]
+layout_mode = 2
+text = "卡牌ID"
+
+[node name="TextEdit2" type="TextEdit" parent="DebugTool/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "1"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -113,6 +134,10 @@ script = ExtResource("6_fjnhr")
 [node name="self_hand" type="Node" parent="Superdomain"]
 script = ExtResource("5_j8h6w")
 
+[node name="self_minion" type="Node" parent="Superdomain"]
+script = ExtResource("9_5oqmt")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 
-[connection signal="pressed" from="Button" to="." method="draw_test"]
+[connection signal="pressed" from="OpenDebugTool" to="DebugTool" method="toggle_visibility"]
+[connection signal="pressed" from="DebugTool/HBoxContainer/Button" to="." method="draw_test"]
