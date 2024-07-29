@@ -57,62 +57,7 @@ enum BattleArea{
 	AREA_INFO
 }
 
-static func calc_card_position(area:BattleArea,slot:int)->Vector3:
-	var x:float
-	var y:float
-	var z:float
-	match area:
-		BattleArea.AREA_OPPO_HEAP:
-			x=GraphicCtrl.HEAPCARD_X_OFFSET+slot*GraphicCtrl.CARD_THICKNESS
-			y=GraphicCtrl.HEAPCARD_Y_OFFSET
-			z=GraphicCtrl.HEAPCARD_Z_OFFSET
-		BattleArea.AREA_SELF_HEAP:
-			x=GraphicCtrl.HEAPCARD_X_OFFSET+slot*GraphicCtrl.CARD_THICKNESS
-			y=-GraphicCtrl.HEAPCARD_Y_OFFSET
-			z=GraphicCtrl.HEAPCARD_Z_OFFSET
-		BattleArea.AREA_SELF_HAND when self_card_hand_count%2==0:
-			var space=GraphicCtrl.HANDCARD_SPACE_CTRL/self_card_hand_count
-			if space>GraphicCtrl.HANDCARD_MAX_SPACE:
-				space=GraphicCtrl.HANDCARD_MAX_SPACE
-			var arc:float=1.571+(space+(self_card_hand_count/2-1)*space*2-slot*space*2)/GraphicCtrl.HANDCARD_ARC_R
-			x=GraphicCtrl.HANDCARD_ARC_R*cos(arc)
-			y=GraphicCtrl.HANDCARD_ARC_R*sin(arc)-GraphicCtrl.HANDCARD_Y_OFFSET
-			z=GraphicCtrl.HANDCARD_Z_OFFSET+GraphicCtrl.CARD_THICKNESS*slot
-			pass
-		BattleArea.AREA_SELF_HAND when self_card_hand_count%2==1:
-			var space=GraphicCtrl.HANDCARD_SPACE_CTRL/self_card_hand_count
-			if space>GraphicCtrl.HANDCARD_MAX_SPACE:
-				space=GraphicCtrl.HANDCARD_MAX_SPACE
-			var arc:float=1.571+(space*(self_card_hand_count-1)-2*slot*space)/GraphicCtrl.HANDCARD_ARC_R
-			x=GraphicCtrl.HANDCARD_ARC_R*cos(arc)
-			y=GraphicCtrl.HANDCARD_ARC_R*sin(arc)-GraphicCtrl.HANDCARD_Y_OFFSET
-			z=GraphicCtrl.HANDCARD_Z_OFFSET+GraphicCtrl.CARD_THICKNESS*slot
-			pass
-		_:
-			x=0
-			y=0
-	return Vector3(x,y,z)
-	
-static func calc_card_rotation(area:BattleArea,slot:int)->Vector3:
-	var x:float=0
-	var y:float=0
-	var z:float=0
-	match area:
-		BattleArea.AREA_OPPO_HEAP:
-			y=1.57
-			z=1.57
-		BattleArea.AREA_SELF_HEAP:
-			y=1.57
-			z=1.57
-		BattleArea.AREA_SELF_HAND:
-			var space=GraphicCtrl.HANDCARD_SPACE_CTRL/self_card_hand_count
-			if space>GraphicCtrl.HANDCARD_MAX_SPACE:
-				space=GraphicCtrl.HANDCARD_MAX_SPACE
-			if self_card_hand_count%2==0:
-				z=(space+(self_card_hand_count/2-1)*space*2-slot*space*2)/GraphicCtrl.HANDCARD_ARC_R
-			else:
-				z=(space*(self_card_hand_count-1)-2*slot*space)/GraphicCtrl.HANDCARD_ARC_R
-	return Vector3(x,y,z)
+
 # TODO: 动态改变
 static func _get_job_name(job_id:int)->String:
 	match job_id:

@@ -7,30 +7,28 @@ signal mouse_left_release
 
 var domains:Node
 # Called when the node enters the scene tree for the first time.
+func draw_test():
+	var pack:String=$TextEdit.text
+	var id:String=$TextEdit2.text
+	$Superdomain.draw(pack,id.to_int())
 func _ready():
-	add_user_signal("mouse_pressed")
 	$MainCamera.position=Vector3(0,GraphicCtrl.CAMERA_Y_OFFSET,GraphicCtrl.CAMERA_HEIGHT)
+	
 	#domains.name=""
 	# TODO:Get Battle Infomations
 	BattleInfoMgr.init_battle("我是你爹","我也是你爹",1,2)
 	# 
-	CardLoader.load("Classic",2)
-	CardLoader.load("Classic",1)
-	for i in range(0,BattleInfoMgr.self_card_heap_count):
-		var card=BasicCard.new(0)
-		card.rotate_y(1.57)
-		card.rotate_x(1.57)
-		card.position=BattleInfoMgr.calc_card_position(BattleInfoMgr.BattleArea.AREA_SELF_HEAP,i)
-		card.area=BattleInfoMgr.BattleArea.AREA_SELF_HEAP
-		$SelfHeap.add_child(card)
 	
+	
+	var cards_s:Array[BasicCard]
+	for i in range(0,BattleInfoMgr.self_card_heap_count):
+		cards_s.append(BasicCard.new())
+	$Superdomain.setdomain("self_heap",cards_s)
+		
+	var cards_o:Array[BasicCard]
 	for i in range(0,BattleInfoMgr.oppo_card_heap_count):
-		var card=BasicCard.new(0)
-		card.rotate_y(1.57)
-		card.rotate_x(1.57)
-		card.position=BattleInfoMgr.calc_card_position(BattleInfoMgr.BattleArea.AREA_OPPO_HEAP,i)
-		card.area=BattleInfoMgr.BattleArea.AREA_OPPO_HEAP
-		$OppoHeap.add_child(card)
+		cards_o.append(BasicCard.new())
+	$Superdomain.setdomain("oppo_heap",cards_o)
 	
 	#Animation
 	

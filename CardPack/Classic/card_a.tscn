@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://x6l7xn076r2u"]
+
+[ext_resource type="Script" path="res://CardPack/Classic/card_a.gd" id="1_2d5ip"]
+
+[node name="CardA" type="Sprite3D"]
+script = ExtResource("1_2d5ip")
+
+[node name="Label3D" type="Label3D" parent="."]
