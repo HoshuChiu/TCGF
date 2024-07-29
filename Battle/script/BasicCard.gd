@@ -143,6 +143,7 @@ func mouse_press():
 	if is_draggable():
 		collision_shape.size=Vector3(50,50,0.01)
 
+
 #鼠标左键松开时
 func mouse_release():
 	is_pressed=false
@@ -150,7 +151,7 @@ func mouse_release():
 		collision_shape.size=Vector3(GraphicCtrl.CARD_WIDTH_M,GraphicCtrl.CARD_HEIGHT_M+5,0.01)
 	_lose_focus()
 	#TODO:判断松手时条件
-	$"/root/Battlefield/Superdomain".play()
+	$"/root/Battle/Superdomain".play()
 
 #鼠标悬浮在卡牌上时，每帧都会调用
 func _hover():
@@ -163,6 +164,8 @@ func _hover():
 		var x:float=((GraphicCtrl.CAMERA_HEIGHT-GraphicCtrl.INFOCARD_HEIGHT)*1.0/GraphicCtrl.CAMERA_HEIGHT)*xx
 		CardInfo.position=Vector3(x,GraphicCtrl.INFOCARD_INHAND_Y_OFFSET,GraphicCtrl.INFOCARD_HEIGHT)
 		CardInfo.rotation=Vector3(0,0,0)
+	if tween:
+		tween.kill()
 
 #鼠标拖动时，每帧都会调用
 func _dragging():
