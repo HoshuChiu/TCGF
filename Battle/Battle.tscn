@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://Battle/Script/Battle.gd" id="1_4vsa6"]
 [ext_resource type="Texture2D" uid="uid://bqgmtty64ja1" path="res://Sketch/card_bkg_0.png" id="2_crw8x"]
 [ext_resource type="Script" path="res://Battle/DubugTool/DebugTool.gd" id="4_2moh2"]
-[ext_resource type="Script" path="res://Battle/Domain/SelfHeap.gd" id="4_kjnty"]
+[ext_resource type="Script" path="res://Battle/Domain/self_heap.gd" id="4_kjnty"]
 [ext_resource type="Texture2D" uid="uid://cidjtmcuslgyk" path="res://Sketch/bf1.png" id="4_m4ir4"]
 [ext_resource type="Script" path="res://Battle/DubugTool/InBattle.gd" id="5_dm6md"]
-[ext_resource type="Script" path="res://Battle/Domain/SelfHand.gd" id="5_j8h6w"]
+[ext_resource type="Script" path="res://Battle/Domain/self_hand.gd" id="5_j8h6w"]
 [ext_resource type="Script" path="res://Battle/DubugTool/CardPackDB.gd" id="5_wnelq"]
 [ext_resource type="Script" path="res://Battle/Domain/oppo_heap.gd" id="6_fjnhr"]
 [ext_resource type="Script" path="res://Battle/Script/Superdomain.gd" id="7_3mavo"]
@@ -88,7 +88,7 @@ text = "打开调试工具"
 offset_left = 4.0
 offset_top = 40.0
 offset_right = 741.0
-offset_bottom = 544.0
+offset_bottom = 163.0
 script = ExtResource("4_2moh2")
 
 [node name="对局" type="HBoxContainer" parent="DebugTool"]
@@ -145,7 +145,7 @@ text = "选择卡包系列"
 
 [node name="标签" type="GridContainer" parent="DebugTool/卡牌数据库"]
 layout_mode = 2
-columns = 10
+columns = 11
 
 [node name="Label2" type="Label" parent="DebugTool/卡牌数据库/标签"]
 custom_minimum_size = Vector2(80, 0)
@@ -222,7 +222,7 @@ layout_mode = 2
 
 [node name="标签2" type="GridContainer" parent="DebugTool/卡牌数据库"]
 layout_mode = 2
-columns = 10
+columns = 11
 
 [node name="Label2" type="Label" parent="DebugTool/卡牌数据库/标签2"]
 custom_minimum_size = Vector2(80, 0)
@@ -321,4 +321,4 @@ script = ExtResource("9_5oqmt")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 
 [connection signal="pressed" from="OpenDebugTool" to="DebugTool" method="toggle_visibility"]
-[connection signal="pressed" from="DebugTool/对局/Button" to="." method="draw_test"]
+[connection signal="pressed" from="DebugTool/对局/Button" to="DebugTool" method="draw_test"]

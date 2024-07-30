@@ -6,10 +6,7 @@ signal mouse_left_press
 signal mouse_left_release
 
 # Called when the node enters the scene tree for the first time.
-func draw_test():
-	var pack:String=$"DebugTool/对局/PackSelector".text
-	var id:String=$DebugTool/对局/TextEdit2.text
-	$Superdomain.draw(pack,id.to_int())
+
 func _ready():
 	$MainCamera.position=Vector3(0,GraphicCtrl.CAMERA_Y_OFFSET,GraphicCtrl.CAMERA_HEIGHT)
 	

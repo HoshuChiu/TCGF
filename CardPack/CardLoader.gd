@@ -16,7 +16,7 @@ static func init():
 
 static func load_card(pack:String,id:int)->BasicCard:
 	var selected_rows : Array[Dictionary]
-	selected_rows = CardPackDB.select_rows("Classic", "id='"+String.num_int64(id)+"'",
+	selected_rows = CardPackDB.select_rows(pack, "id='"+String.num_int64(id)+"'",
 		["id","name","type","custom_tscn","cost","melee_atk","ranged_atk","health","rarity","race","class"]
 	)
 	

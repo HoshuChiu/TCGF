@@ -210,6 +210,7 @@ func on_draw(args):
 		Minion=Sprite3D.new()
 		add_child(Minion)
 		Minion.texture=preload("res://Sketch/card_fg_minion_0.png")
+		Minion.hide()
 
 #设定抽牌时的动画的Key帧
 func draw(tween_p:Tween,dst_pos:Vector3,dst_rot:Vector3):

@@ -137,6 +137,9 @@ func on_newbtn_pressed1():
 				data[item.name]=item.get_data()
 			if item.name=="id":
 				id=item.get_data()
+				if row_id_ind.has(id):
+					print("id不允许重复")
+					return
 		CardLoader.new_card(current_cardpack,data)
 		on_popup_selected(current_cardpack_ind)
 	else:
@@ -152,6 +155,9 @@ func on_newbtn_pressed2():
 				data[item.name]=item.get_data()
 			if item.name=="id":
 				id=item.get_data()
+				if row_id_ind.has(id):
+					print("id不允许重复")
+					return
 		CardLoader.new_card(current_cardpack,data)
 		on_popup_selected(current_cardpack_ind)
 	else:

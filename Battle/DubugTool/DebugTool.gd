@@ -12,6 +12,6 @@ func _ready():
 	self.visible=false
 
 func draw_test():
-	var pack:String=$HBoxContainer/TextEdit.text
-	var id:String=$HBoxContainer/TextEdit2.text
+	var pack:String=$"对局/PackSelector".text
+	var id:String=$对局/TextEdit2.text
 	$"../Superdomain".draw(pack,id.to_int())
