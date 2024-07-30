@@ -11,6 +11,7 @@ func _ready():
 	var hb=$CardConstructor1
 	hb.add_child(DataEdit.new(DataEdit.datatype.ID))
 	hb.add_child(DataEdit.new(DataEdit.datatype.NAME))
+	hb.add_child(DataSelector.new(DataSelector.datatype.TYPE))
 	hb.add_child(DataEdit.new(DataEdit.datatype.COST))
 	hb.add_child(DataEdit.new(DataEdit.datatype.MELEE_ATK))
 	hb.add_child(DataEdit.new(DataEdit.datatype.RANGED_ATK))
@@ -73,6 +74,7 @@ func on_popup_selected(index:int):
 			hb.add_child(label)
 			hb.add_child(DataEdit.new(DataEdit.datatype.CUSTOM_TSCN,card["custom_tscn"]))
 		else:
+			hb.add_child(DataSelector.new(DataSelector.datatype.TYPE))
 			hb.add_child(DataEdit.new(DataEdit.datatype.COST,card["cost"]))
 			hb.add_child(DataEdit.new(DataEdit.datatype.MELEE_ATK,card["melee_atk"]))
 			hb.add_child(DataEdit.new(DataEdit.datatype.RANGED_ATK,card["ranged_atk"]))

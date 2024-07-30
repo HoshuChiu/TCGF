@@ -159,6 +159,12 @@ layout_mode = 2
 text = "名称"
 horizontal_alignment = 1
 
+[node name="Label11" type="Label" parent="DebugTool/卡牌数据库/标签"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "类型"
+horizontal_alignment = 1
+
 [node name="Label4" type="Label" parent="DebugTool/卡牌数据库/标签"]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
@@ -228,6 +234,12 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 text = "名称"
+horizontal_alignment = 1
+
+[node name="Label11" type="Label" parent="DebugTool/卡牌数据库/标签2"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "类型"
 horizontal_alignment = 1
 
 [node name="Label4" type="Label" parent="DebugTool/卡牌数据库/标签2"]

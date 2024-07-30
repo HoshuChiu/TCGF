@@ -1,6 +1,7 @@
 extends MenuButton
 class_name DataSelector
 enum datatype{
+	TYPE,
 	RARITY,
 	JOB
 }
@@ -9,6 +10,13 @@ var current_id:int=0
 func _init(type:datatype,val:int=0):
 	var popup:PopupMenu=get_popup()
 	match type:
+		datatype.TYPE:
+			popup.add_item("随从")
+			popup.add_item("法术")
+			popup.add_item("武器")
+			popup.add_item("建筑")
+			popup.add_item("其他")
+			name="type"
 		datatype.RARITY:
 			popup.add_item("无")
 			popup.add_item("普通")
