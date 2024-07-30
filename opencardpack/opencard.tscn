@@ -1,0 +1,131 @@
+[gd_scene load_steps=14 format=3 uid="uid://bmqbdtroa0udr"]
+
+[ext_resource type="Script" path="res://opencardpack/cardflip.gd" id="1_a23kb"]
+[ext_resource type="Shader" path="res://opencardpack/perspective.gdshader" id="2_yoeyu"]
+[ext_resource type="Texture2D" uid="uid://bqgmtty64ja1" path="res://Sketch/card_bkg_0.png" id="3_20ehe"]
+[ext_resource type="Texture2D" uid="uid://lc1gomtd6vq" path="res://Sketch/card_fg_minion_0.png" id="4_ubf60"]
+[ext_resource type="AudioStream" uid="uid://yixliq522x3t" path="res://opencardpack/哇，金色传说.mp3" id="5_a5apr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5y40y"]
+shader = ExtResource("2_yoeyu")
+shader_parameter/fov = 90.0
+shader_parameter/cull_back = true
+shader_parameter/y_rot = -180.0
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6kb5t"]
+shader = ExtResource("2_yoeyu")
+shader_parameter/fov = 90.0
+shader_parameter/cull_back = true
+shader_parameter/y_rot = 0.0
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
+
+[sub_resource type="Animation" id="Animation_28emu"]
+resource_name = "flip_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:y_rot")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 180.0]
+}
+
+[sub_resource type="Animation" id="Animation_ciq2a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:y_rot")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_781b1"]
+_data = {
+"RESET": SubResource("Animation_ciq2a"),
+"flip_animation": SubResource("Animation_28emu")
+}
+
+[sub_resource type="Curve" id="Curve_mkwdq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.986063, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_qo23p"]
+curve = SubResource("Curve_mkwdq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_18qvw"]
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 406.68
+initial_velocity_max = 558.49
+gravity = Vector3(0, 0, 0)
+scale_min = 12.37
+scale_max = 18.74
+scale_curve = SubResource("CurveTexture_qo23p")
+
+[node name="Opencard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 2.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a23kb")
+
+[node name="card_front" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_5y40y")
+layout_mode = 0
+offset_right = 308.0
+offset_bottom = 458.0
+texture = ExtResource("4_ubf60")
+
+[node name="card_behind" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_6kb5t")
+layout_mode = 0
+offset_right = 308.0
+offset_bottom = 458.0
+texture = ExtResource("3_20ehe")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_right = 308.0
+offset_bottom = 457.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_781b1")
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(154, 208)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_a5apr")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 0, 1)
+position = Vector2(161, 220)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_18qvw")
+explosiveness = 1.0
+collision_base_size = 2.0
+
+[connection signal="button_down" from="TextureButton" to="." method="_on_texture_button_button_down"]
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
