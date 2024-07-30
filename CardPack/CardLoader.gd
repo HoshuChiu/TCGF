@@ -36,7 +36,30 @@ static func load_card(pack:String,id:int)->BasicCard:
 		card.race=card_data["race"]
 		card.job=card_data["class"]
 		return card
+
+static func load_pack(pack:String)->Array[Dictionary]:
+	var selected_rows : Array[Dictionary]
+	selected_rows = CardPackDB.select_rows(pack, "true",
+		["id","name","type","custom_tscn","cost","melee_atk","ranged_atk","health","rarity","race","class"]
+	)
+	return selected_rows
+
+static func update_card(pack:String,id:int,data:Dictionary):
+	CardPackDB.update_rows(pack,"id="+String.num_int64(id),data)
+	pass
 	
+static func delete_card(pack:String,id:int):
+	CardPackDB.delete_rows(pack,"id="+String.num_int64(id))
+	pass
+
+static func new_card(pack:String,data:Dictionary):
+	CardPackDB.insert_row(pack,data)
+	pass
+
 static func clean():
 	CardPackDB.close_db()
 	pass
+
+static func get_packs()->PackedStringArray:
+	var dirs=DirAccess.get_directories_at("res://CardPack/")
+	return dirs

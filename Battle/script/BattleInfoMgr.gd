@@ -61,6 +61,8 @@ enum BattleArea{
 # TODO: 动态改变
 static func _get_job_name(job_id:int)->String:
 	match job_id:
+		0:
+			return "中立"
 		1:
 			return "骑士"
 		2:
@@ -73,6 +75,24 @@ static func _get_job_name(job_id:int)->String:
 			return "影剑士"
 		_:
 			return "未知"
+			
+# TODO: 动态改变
+static func _get_job_id(job_id:String)->int:
+	match job_id:
+		"中立":
+			return 0
+		"骑士":
+			return 1
+		"法师":
+			return 2
+		"牧师":
+			return 3
+		"恶魔":
+			return 4
+		"影剑士":
+			return 5
+		_:
+			return 0
 
 # TODO: 动态改变
 static func _get_hand_max_initial()->int:

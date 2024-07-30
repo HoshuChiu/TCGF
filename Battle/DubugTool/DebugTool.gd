@@ -1,4 +1,4 @@
-extends VBoxContainer
+extends TabContainer
 
 func toggle_visibility():
 	if self.visible==true:

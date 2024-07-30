@@ -1,12 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://bel073bv2jmwl"]
+[gd_scene load_steps=14 format=3 uid="uid://bel073bv2jmwl"]
 
 [ext_resource type="Script" path="res://Battle/script/Battlefield.gd" id="1_uh0kt"]
 [ext_resource type="Texture2D" uid="uid://bqgmtty64ja1" path="res://Sketch/card_bkg_0.png" id="2_crw8x"]
-[ext_resource type="Script" path="res://Battle/DebugTool.gd" id="4_2moh2"]
+[ext_resource type="Script" path="res://Battle/DubugTool/DebugTool.gd" id="4_2moh2"]
 [ext_resource type="Script" path="res://Battle/Domain/SelfHeap.gd" id="4_kjnty"]
 [ext_resource type="Texture2D" uid="uid://cidjtmcuslgyk" path="res://Sketch/bf1.png" id="4_m4ir4"]
 [ext_resource type="Script" path="res://Battle/script/Superdomain.gd" id="5_bncey"]
 [ext_resource type="Script" path="res://Battle/Domain/SelfHand.gd" id="5_j8h6w"]
+[ext_resource type="Script" path="res://Battle/DubugTool/CardPackDB.gd" id="5_wnelq"]
 [ext_resource type="Script" path="res://Battle/Domain/oppo_heap.gd" id="6_fjnhr"]
 [ext_resource type="Script" path="res://Battle/Domain/self_minion.gd" id="9_5oqmt"]
 
@@ -82,40 +83,207 @@ offset_right = 113.0
 offset_bottom = 36.0
 text = "打开调试工具"
 
-[node name="DebugTool" type="VBoxContainer" parent="."]
-offset_left = 40.0
-offset_top = 52.0
-offset_right = 400.0
-offset_bottom = 125.0
+[node name="DebugTool" type="TabContainer" parent="."]
+offset_left = 4.0
+offset_top = 40.0
+offset_right = 741.0
+offset_bottom = 544.0
+current_tab = 1
 script = ExtResource("4_2moh2")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="DebugTool"]
+[node name="对局" type="HBoxContainer" parent="DebugTool"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Button" type="Button" parent="DebugTool/HBoxContainer"]
+[node name="Button" type="Button" parent="DebugTool/对局"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 0
+size_flags_vertical = 0
 text = "抽卡"
 
-[node name="Label" type="Label" parent="DebugTool/HBoxContainer"]
+[node name="Label" type="Label" parent="DebugTool/对局"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+size_flags_vertical = 0
 text = "卡包系列"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="TextEdit" type="TextEdit" parent="DebugTool/HBoxContainer"]
+[node name="TextEdit" type="TextEdit" parent="DebugTool/对局"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 0
 text = "Classic"
 
-[node name="Label2" type="Label" parent="DebugTool/HBoxContainer"]
+[node name="Label2" type="Label" parent="DebugTool/对局"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+size_flags_vertical = 0
 text = "卡牌ID"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="TextEdit2" type="TextEdit" parent="DebugTool/HBoxContainer"]
+[node name="TextEdit2" type="TextEdit" parent="DebugTool/对局"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 0
 text = "1"
+
+[node name="卡牌数据库" type="VBoxContainer" parent="DebugTool"]
+layout_mode = 2
+script = ExtResource("5_wnelq")
+
+[node name="MenuButton" type="MenuButton" parent="DebugTool/卡牌数据库"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "选择卡包系列"
+
+[node name="标签" type="GridContainer" parent="DebugTool/卡牌数据库"]
+layout_mode = 2
+columns = 10
+
+[node name="Label2" type="Label" parent="DebugTool/卡牌数据库/标签"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "卡牌id"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="DebugTool/卡牌数据库/标签"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "名称"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="DebugTool/卡牌数据库/标签"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "消耗"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="DebugTool/卡牌数据库/标签"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "近程攻击"
+horizontal_alignment = 1
+
+[node name="Label6" type="Label" parent="DebugTool/卡牌数据库/标签"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "远程攻击"
+horizontal_alignment = 1
+
+[node name="Label7" type="Label" parent="DebugTool/卡牌数据库/标签"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "生命值"
+horizontal_alignment = 1
+
+[node name="Label8" type="Label" parent="DebugTool/卡牌数据库/标签"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "稀有度"
+horizontal_alignment = 1
+
+[node name="Label9" type="Label" parent="DebugTool/卡牌数据库/标签"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "种族"
+horizontal_alignment = 1
+
+[node name="Label10" type="Label" parent="DebugTool/卡牌数据库/标签"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "职业"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="DebugTool/卡牌数据库/标签"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "操作"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="DebugTool/卡牌数据库"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="Data" type="VBoxContainer" parent="DebugTool/卡牌数据库/ScrollContainer"]
+layout_mode = 2
+
+[node name="标签2" type="GridContainer" parent="DebugTool/卡牌数据库"]
+layout_mode = 2
+columns = 10
+
+[node name="Label2" type="Label" parent="DebugTool/卡牌数据库/标签2"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "卡牌id"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="DebugTool/卡牌数据库/标签2"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "名称"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="DebugTool/卡牌数据库/标签2"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "消耗"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="DebugTool/卡牌数据库/标签2"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "近程攻击"
+horizontal_alignment = 1
+
+[node name="Label6" type="Label" parent="DebugTool/卡牌数据库/标签2"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "远程攻击"
+horizontal_alignment = 1
+
+[node name="Label7" type="Label" parent="DebugTool/卡牌数据库/标签2"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "生命值"
+horizontal_alignment = 1
+
+[node name="Label8" type="Label" parent="DebugTool/卡牌数据库/标签2"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "稀有度"
+horizontal_alignment = 1
+
+[node name="Label9" type="Label" parent="DebugTool/卡牌数据库/标签2"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "种族"
+horizontal_alignment = 1
+
+[node name="Label10" type="Label" parent="DebugTool/卡牌数据库/标签2"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "职业"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="DebugTool/卡牌数据库/标签2"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "操作"
+horizontal_alignment = 1
+
+[node name="CardConstructor1" type="HBoxContainer" parent="DebugTool/卡牌数据库"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="CardConstructor2" type="HBoxContainer" parent="DebugTool/卡牌数据库"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -140,4 +308,4 @@ script = ExtResource("9_5oqmt")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 
 [connection signal="pressed" from="OpenDebugTool" to="DebugTool" method="toggle_visibility"]
-[connection signal="pressed" from="DebugTool/HBoxContainer/Button" to="." method="draw_test"]
+[connection signal="pressed" from="DebugTool/对局/Button" to="." method="draw_test"]
