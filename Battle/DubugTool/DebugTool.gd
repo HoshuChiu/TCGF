@@ -10,3 +10,8 @@ func toggle_visibility():
 	
 func _ready():
 	self.visible=false
+
+func draw_test():
+	var pack:String=$HBoxContainer/TextEdit.text
+	var id:String=$HBoxContainer/TextEdit2.text
+	$"../Superdomain".draw(pack,id.to_int())

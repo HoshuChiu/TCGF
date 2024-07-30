@@ -1,11 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://bel073bv2jmwl"]
+[gd_scene load_steps=15 format=3 uid="uid://d02gqmbxhc0kh"]
 
-[ext_resource type="Script" path="res://Battle/script/Battlefield.gd" id="1_uh0kt"]
+[ext_resource type="Script" path="res://Battle/script/Battle.gd" id="1_oi62q"]
 [ext_resource type="Texture2D" uid="uid://bqgmtty64ja1" path="res://Sketch/card_bkg_0.png" id="2_crw8x"]
 [ext_resource type="Script" path="res://Battle/DubugTool/DebugTool.gd" id="4_2moh2"]
 [ext_resource type="Script" path="res://Battle/Domain/SelfHeap.gd" id="4_kjnty"]
 [ext_resource type="Texture2D" uid="uid://cidjtmcuslgyk" path="res://Sketch/bf1.png" id="4_m4ir4"]
 [ext_resource type="Script" path="res://Battle/script/Superdomain.gd" id="5_bncey"]
+[ext_resource type="Script" path="res://Battle/DubugTool/InBattle.gd" id="5_dm6md"]
 [ext_resource type="Script" path="res://Battle/Domain/SelfHand.gd" id="5_j8h6w"]
 [ext_resource type="Script" path="res://Battle/DubugTool/CardPackDB.gd" id="5_wnelq"]
 [ext_resource type="Script" path="res://Battle/Domain/oppo_heap.gd" id="6_fjnhr"]
@@ -54,8 +55,8 @@ _data = {
 "draw_card": SubResource("Animation_jrat8")
 }
 
-[node name="Battlefield" type="Node3D"]
-script = ExtResource("1_uh0kt")
+[node name="Battle" type="Node3D"]
+script = ExtResource("1_oi62q")
 
 [node name="Node3D" type="Node3D" parent="."]
 
@@ -88,13 +89,12 @@ offset_left = 4.0
 offset_top = 40.0
 offset_right = 741.0
 offset_bottom = 544.0
-current_tab = 1
 script = ExtResource("4_2moh2")
 
 [node name="对局" type="HBoxContainer" parent="DebugTool"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 0
+script = ExtResource("5_dm6md")
 
 [node name="Button" type="Button" parent="DebugTool/对局"]
 custom_minimum_size = Vector2(0, 40)
@@ -111,7 +111,7 @@ text = "卡包系列"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextEdit" type="TextEdit" parent="DebugTool/对局"]
+[node name="PackSelector" type="MenuButton" parent="DebugTool/对局"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -134,6 +134,7 @@ size_flags_vertical = 0
 text = "1"
 
 [node name="卡牌数据库" type="VBoxContainer" parent="DebugTool"]
+visible = false
 layout_mode = 2
 script = ExtResource("5_wnelq")
 

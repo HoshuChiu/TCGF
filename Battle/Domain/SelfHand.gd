@@ -35,6 +35,7 @@ func readjust(slot:int=-1):
 			tween.set_parallel(true)
 			tween.tween_property(child.CardInfo, "position", dst_pos, 0.1).from_current()
 			tween.tween_property(child.CardInfo, "rotation", dst_qua, 0.1).from_current()
+			child.tween=tween
 			child.draw_done(null)
 	pass
 

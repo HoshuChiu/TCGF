@@ -12,5 +12,3 @@ health = 7
 race = "人类"
 description = "打出时：摧毁一颗己方水晶"
 card_name = "水晶吞噬者"
-
-[node name="Label3D" type="Label3D" parent="."]

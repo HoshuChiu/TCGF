@@ -1,3 +1,6 @@
+# 注意，这个文件对Domain信息的记录将在若干版本迭代后被删除，这里面记录的信息已不具备实际作用
+# Domain内的信息实际上由Domain自身维护
+
 extends Object
 class_name BattleInfoMgr
 

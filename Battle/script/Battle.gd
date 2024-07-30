@@ -5,16 +5,14 @@ class_name BF
 signal mouse_left_press
 signal mouse_left_release
 
-var domains:Node
 # Called when the node enters the scene tree for the first time.
 func draw_test():
-	var pack:String=$DebugTool/对局/TextEdit.text
+	var pack:String=$"DebugTool/对局/PackSelector".text
 	var id:String=$DebugTool/对局/TextEdit2.text
 	$Superdomain.draw(pack,id.to_int())
 func _ready():
 	$MainCamera.position=Vector3(0,GraphicCtrl.CAMERA_Y_OFFSET,GraphicCtrl.CAMERA_HEIGHT)
 	
-	#domains.name=""
 	# TODO:Get Battle Infomations
 	BattleInfoMgr.init_battle("我是你爹","我也是你爹",1,2)
 	# 
@@ -35,8 +33,8 @@ func _process(delta):
 	hover_timer+=delta
 	pass
 
+# 鼠标处理
 const RAY_LENGTH = 200
-
 var hovering_card:BasicCard
 @onready var hover_action_enable:bool=true
 @onready var hover_timer:float=0
