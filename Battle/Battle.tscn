@@ -1,15 +1,15 @@
 [gd_scene load_steps=15 format=3 uid="uid://d02gqmbxhc0kh"]
 
-[ext_resource type="Script" path="res://Battle/script/Battle.gd" id="1_oi62q"]
+[ext_resource type="Script" path="res://Battle/Script/Battle.gd" id="1_4vsa6"]
 [ext_resource type="Texture2D" uid="uid://bqgmtty64ja1" path="res://Sketch/card_bkg_0.png" id="2_crw8x"]
 [ext_resource type="Script" path="res://Battle/DubugTool/DebugTool.gd" id="4_2moh2"]
 [ext_resource type="Script" path="res://Battle/Domain/SelfHeap.gd" id="4_kjnty"]
 [ext_resource type="Texture2D" uid="uid://cidjtmcuslgyk" path="res://Sketch/bf1.png" id="4_m4ir4"]
-[ext_resource type="Script" path="res://Battle/script/Superdomain.gd" id="5_bncey"]
 [ext_resource type="Script" path="res://Battle/DubugTool/InBattle.gd" id="5_dm6md"]
 [ext_resource type="Script" path="res://Battle/Domain/SelfHand.gd" id="5_j8h6w"]
 [ext_resource type="Script" path="res://Battle/DubugTool/CardPackDB.gd" id="5_wnelq"]
 [ext_resource type="Script" path="res://Battle/Domain/oppo_heap.gd" id="6_fjnhr"]
+[ext_resource type="Script" path="res://Battle/Script/Superdomain.gd" id="7_3mavo"]
 [ext_resource type="Script" path="res://Battle/Domain/self_minion.gd" id="9_5oqmt"]
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_fx01p"]
@@ -56,7 +56,7 @@ _data = {
 }
 
 [node name="Battle" type="Node3D"]
-script = ExtResource("1_oi62q")
+script = ExtResource("1_4vsa6")
 
 [node name="Node3D" type="Node3D" parent="."]
 
@@ -292,7 +292,7 @@ libraries = {
 }
 
 [node name="Superdomain" type="Node" parent="."]
-script = ExtResource("5_bncey")
+script = ExtResource("7_3mavo")
 
 [node name="self_heap" type="Node" parent="Superdomain"]
 script = ExtResource("4_kjnty")
